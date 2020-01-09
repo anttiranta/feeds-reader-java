@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %p %m%n</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+        <RollingFile name="infoLog" fileName="application-info.log">
+            <LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+        <RollingFile name="errorLog" fileName="application-error.log">
+            <LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+        <RollingFile name="springLog" fileName="spring.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="19500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="1"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="nfq.asia.task.console.ImportItemCommand" additivity="false">
+            <AppenderRef ref="debugLog" />
+            <AppenderRef ref="infoLog"  />
+            <AppenderRef ref="errorLog" />
+            <AppenderRef ref="Console"  />
+        </Logger>
+        <Logger name="nfq.asia.task" additivity="false">
+            <AppenderRef ref="debugLog" />
+            <AppenderRef ref="infoLog"  />
+            <AppenderRef ref="errorLog" />
+        </Logger>
+        <Logger name="org.springframework" additivity="false">
+            <AppenderRef ref="springLog" />
+            <AppenderRef ref="Console"/>
+        </Logger>  
+        <Root level="all">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

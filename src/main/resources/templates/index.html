@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${title}"></title>
+        <th:block th:include="layout/header :: header-meta(title=${title})"></th:block>
+    </head>
+    <body>
+        <th:block th:include="layout/navbar :: navbar(current='items')"></th:block>
+        
+        <div th:replace="layout/messages :: messages(messages=${messages})"></div>
+
+        <h1 style="font-size:25px" th:text="${title}"></h1>
+        <br />
+
+        <div>
+            <a th:href="@{/}" class="fa fa-home fa-lg" th:text="#{item.clear_filters}"></a><br /><br />
+        </div>
+        <div>
+            <a th:href="@{/new}" class="fa fa-home fa-lg" style="float:right;padding-top:0px;" th:text="#{item.add_item}"></a>
+        </div>
+
+        <th:block th:if="${items.isEmpty() == false}">
+            
+            <form th:action="@{/}" method="post">
+                <div class="form-group">
+                    <label for="search_word" th:text="#{item.search} + ':'"></label>
+                    <input type="text" class="form-control searchInput" name="search_word" id="search_word" />
+                    <select id="search_subject" name="search_subject">
+                        <option value="title">Title</option>
+                        <option value="description">Description</option>
+                        <option value="link">Link</option>
+                        <option value="category_name">Category</option>
+                        <option value="category_domain">Category domain</option>
+                    </select>
+                    <input type="submit" class="btn btn-primary" th:value="#{item.search}" />
+                    <br /><br />
+                </div>
+            </form>
+
+            <table class="table table-bordered table-hover table-striped display" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th style="width:50px">Title</th>
+                        <th style="width:100px">Description</th>
+                        <th style="width:100px">Published date</th>
+                        <th style="width:100px">Link</th>
+                        <th style="width:100px">Category</th>
+                        <th style="width:50px">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item : ${items}">
+                        <td>
+                            <th:block th:text="${item.id}"></th:block>      
+                        </td>
+                        <td>
+                            <th:block th:text="${item.title}"></th:block>
+                        </td>
+                        <td>
+                            <th:block th:text="${item.description}"></th:block>      
+                        </td>
+                        <td>
+                            <th:block th:text="${#dates.format(item.pubDate, 'dd-MM-yyyy HH:mm')}"></th:block>
+                        </td>
+                        <td>
+                            <a th:id="${item.id}" th:href="${item.link}" class="itemLink" target="_blank">
+                                <strong th:id="${item.id}" class="itemTitle">
+                                    <th:block th:text="${item.link}"></th:block>
+                                </strong>
+                            </a>   
+                        </td>
+                        <td>
+                            <th:block th:if="${item.category != null}" th:text="${item.category.name} + ' (domain: ' + ${item.category.domain} + ')'"></th:block>
+                        </td>
+                        <td>
+                            <span class="label label-info">
+                                <a th:href="${'/edit/?id=' + item.id}">Edit</a> | 
+                                <a th:href="${'/delete/?id=' + item.id}">Delete</a>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div th:replace="layout/pager :: pager(pager=${pager})"></div>
+        </th:block>
+        <th:block th:unless="${items.isEmpty() == false}">
+            <span th:text="#{item.no_items_found} + '.'"></span>
+        </th:block>
+    </body>
+</html>

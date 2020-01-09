@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <title>Language switcher</title>
+    </head>
+    <body>
+        <th:block th:fragment="language-switcher">
+            <div style="float:right;padding-top:0px;">
+                <select id="localeCode">
+                    <option value=""></option>
+                    <option value="en" th:text="#{lang.eng}"></option>
+                    <option value="fi" th:text="#{lang.fi}"></option>
+                </select>
+                <input type="input" class="btn btn-primary" th:value="#{lang.change}" onClick="changeLang(); return false;" />
+                <script type="text/javascript" th:inline="javascript">
+                    /*<![CDATA[*/
+                    function changeLang() {
+                        var selectedOption = $('#localeCode').val();
+                        if (selectedOption != '') {
+                            window.location.replace('?lang=' + selectedOption);
+                        }
+                    }
+                    /*]]>*/
+                </script>
+            </div>
+        </th:block>
+    </body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${title}"></title>
+        <th:block th:include="layout/header :: header-meta(title=${title})"></th:block>
+    </head>
+    <body>
+        <th:block th:include="layout/navbar :: navbar(current='items')"></th:block>
+
+        <div th:replace="layout/messages :: messages(messages=${messages})"></div>
+
+        <h1 style="font-size:25px" th:text="${title}"></h1>
+        <br />
+
+        <div class="container">
+            <form th:action="@{/save}" method="post" th:object="${item}" class="form-horizontal blogForm">
+                <div class="form-group">
+                    <input type="hidden" th:field="*{id}" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="hidden" id="current_category_id" th:value="${item.category !=null}? ${item.category.id} : '0'" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="title" class="col-sm-2 control-label">Title:</label>
+                    <div class="col-sm-10">
+                        <input type="text" th:field="*{title}" class="form-control" />
+                        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">error</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description" class="col-sm-2 control-label">Description:</label>
+                    <div class="col-sm-10">
+                        <textarea rows="10" cols="40" th:field="*{description}" class="form-control" />
+                        <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">error</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="pubDate" class="col-sm-2 control-label">Published date:</label>
+                    <div class="col-sm-10">
+                        <input type="text" th:field="*{pubDate}" class="form-control" id="pubDate" placeholder="Format: 2001-07-04T12:08:56.235-0700" />
+                        <span th:if="${#fields.hasErrors('pubDate')}" th:errors="*{pubDate}">error</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="link" class="col-sm-2 control-label">Link:</label>
+                    <div class="col-sm-10">
+                        <input type="text" th:field="*{link}" class="form-control" />
+                        <span th:if="${#fields.hasErrors('link')}" th:errors="*{link}">error</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="link" class="col-sm-2 control-label">Comments:</label>
+                    <div class="col-sm-10">
+                        <input type="text" th:field="*{comments}" class="form-control" />
+                        <span th:if="${#fields.hasErrors('comments')}" th:errors="*{comments}">error</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="link" class="col-sm-2 control-label">Category:</label>
+                    <div class="col-sm-10">
+                        <select th:field="*{category}" id="category_select">
+                        </select>
+                        <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}">error</span>
+                    </div>
+                </div>
+
+                <input type="submit" class="btn btn-primary" value="Save" />
+                <a th:href="@{/}">Cancel</a>
+            </form>
+        </div>
+
+        <script type="text/javascript" src="/resources/js/item-form.js"></script>
+        <script type="text/javascript" th:inline="javascript">
+            /*<![CDATA[*/
+            var ajax = false;
+
+            $(document).ready(function () {
+                // TODO: remove below code (moved to item-form.js)
+                /*$.ajax({
+                    type: "GET",
+                    url: '/api/v1/category/categories',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        ajax = true;
+                    },
+                    error: function () {
+                        // Ignore
+                    },
+                    success: function (data) {
+                        var jsonObj = JSON.parse(JSON.stringify(data));
+                        var currentItemCategory = $("#current_category_id").val();
+                        var html = '<option value="0"></option>';
+
+                        $.each(jsonObj, function () {
+                            html += '<option value="' + this.id + '" ';
+                            if (currentItemCategory == this.id) {
+                                html += ' selected=selected';
+                            }
+                            html += '>' + this.name + '</option>'
+                        });
+                        
+                        $("#category_select").html(html);
+                    },
+                    complete: function () {
+                        ajax = false;
+                    }
+                });*/
+                NAT.itemForm.findAllCategories();
+            });
+            /*]]>*/
+        </script>
+    </body>
+</html>
