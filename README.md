@@ -19,3 +19,4 @@ Task is to create a Java application that is a feeds reader. The app can read fe
 
 - There are still some open todos
 - More unit tests should be written to cover the implementation
+- There is also few classes which were written only to test user authentication and rights management
