@@ -1,6 +1,6 @@
 # Java Spring Boot task: feeds reader application
 
-This is a demo application which I did to refresh my memory with Java and to learn Spring Boot and new Java features that came after version 8. 
+This is a demo application/job apply task which I did to refresh my memory with Java and to learn new Java features that came after version 8. 
 
 Task is to create a Java application that is a feeds reader. The app can read feed from multiple sources and store them to database. Sample feeds http://www.feedforall.com/sample-feeds.htm. 
 
