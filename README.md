@@ -13,7 +13,6 @@ Task is to create a Java application that is a feeds reader. The app can read fe
 - As a user, I want to filter items by category name on list of items. 
 - As a user, I want to create new item manually via a form. 
 - As a user, I want to update/delete an item
-- The implementation should covered by Unit Test or Functional Test
 
 ## To note
 
