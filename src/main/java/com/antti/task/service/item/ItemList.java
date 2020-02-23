@@ -51,7 +51,7 @@ public class ItemList {
         
         // TODO: replace hql with jpql
         String hql = "select i from " + Item.class.getSimpleName() + " i ";
-        hql += ("inner join i.category cat ");
+        hql += ("left join i.category cat ");
         hql += "where 1=1";
         
         for(Map.Entry<String, String> entry : parsedFilters.entrySet()) {

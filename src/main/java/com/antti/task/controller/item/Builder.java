@@ -16,7 +16,7 @@ public class Builder {
     private ItemRepository itemRepository;
 
     private final Logger logger
-            = LogManager.getLogger("nfq.asia.task");
+            = LogManager.getLogger("com.antti.task");
 
     /**
      * Default constructor

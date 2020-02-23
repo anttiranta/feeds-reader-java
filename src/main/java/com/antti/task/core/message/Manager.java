@@ -19,7 +19,7 @@ public class Manager implements ManagerInterface {
     @Autowired
     protected HttpSession session;
  
-    private final Logger logger = Logger.getLogger("nfq.asia.task");
+    private final Logger logger = Logger.getLogger("com.antti.task");
  
     protected String defaultGroup;
  

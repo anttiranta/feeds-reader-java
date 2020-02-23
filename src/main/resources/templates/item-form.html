@@ -69,14 +69,12 @@
             </form>
         </div>
 
-        <script type="text/javascript" src="/resources/js/item-form.js"></script>
+        
         <script type="text/javascript" th:inline="javascript">
-            /*<![CDATA[*/
             var ajax = false;
 
             $(document).ready(function () {
-                // TODO: remove below code (moved to item-form.js)
-                /*$.ajax({
+                $.ajax({
                     type: "GET",
                     url: '/api/v1/category/categories',
                     dataType: 'json',
@@ -104,10 +102,8 @@
                     complete: function () {
                         ajax = false;
                     }
-                });*/
-                NAT.itemForm.findAllCategories();
+                });
             });
-            /*]]>*/
         </script>
     </body>
 </html>

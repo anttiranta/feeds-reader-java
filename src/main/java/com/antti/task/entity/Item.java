@@ -2,6 +2,7 @@ package com.antti.task.entity;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -150,5 +151,27 @@ public class Item {
     @PreUpdate
     public void preUpdate() {
         this.updatedDate = new Date(Instant.now().toEpochMilli());
+    }
+    
+    @Override
+    public boolean equals(Object object) {
+        if (object == this)
+            return true;
+        if ((object == null) || !(object instanceof Item))
+            return false;
+ 
+        final Item item = (Item)object;
+ 
+        if (id != null && item.getId() != null) {
+            return id.equals(item.getId());
+}
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.id);
+        return hash;
     }
 }

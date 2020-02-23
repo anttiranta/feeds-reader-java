@@ -9,8 +9,9 @@ import com.antti.task.entity.Item;
 import com.antti.task.exception.CouldNotSaveException;
 import com.antti.task.item.service.importing.item.DateFormatter;
 import com.antti.task.item.service.importing.item.FormatRequestBuilder;
-import com.antti.task.repository.CategoryRepository;
+import com.antti.task.service.category.GetByDomain;
 import com.antti.task.util.integration.ItemImportHelper;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,15 +20,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public class Processor {
 
     @Autowired
-    @Qualifier("nfq.asia.task.service.item.Save")
+    @Qualifier("com.antti.task.service.item.Save")
     private Save saveService;
 
     @Autowired
-    private CategoryRepository categoryRepository;
-
-    @Autowired
     private ItemImportHelper itemImportHelper;
+    
+    @Autowired
+    private GetByDomain getByDomainService;
 
+    @Transactional
     public boolean processAll(List<Map<String, Object>> itemsData) {
         boolean isSuccessful = true;
         for (Map<String, Object> itemData : itemsData) {
@@ -83,7 +85,7 @@ public class Processor {
                 (String)itemData.get("category_domain")
             );
             
-            Category category = this.categoryRepository.findByDomain(domain);
+            Category category = this.getByDomainService.execute(domain);
             if (category == null) {
                 category = new Category();
                 category.setDomain(domain);

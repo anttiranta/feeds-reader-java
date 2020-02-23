@@ -32,13 +32,13 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-        <Logger name="nfq.asia.task.console.ImportItemCommand" additivity="false">
+        <Logger name="com.antti.task.console.ImportItemCommand" additivity="false">
             <AppenderRef ref="debugLog" />
             <AppenderRef ref="infoLog"  />
             <AppenderRef ref="errorLog" />
             <AppenderRef ref="Console"  />
         </Logger>
-        <Logger name="nfq.asia.task" additivity="false">
+        <Logger name="com.antti.task" additivity="false">
             <AppenderRef ref="debugLog" />
             <AppenderRef ref="infoLog"  />
             <AppenderRef ref="errorLog" />

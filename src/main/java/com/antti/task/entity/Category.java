@@ -1,10 +1,10 @@
 package com.antti.task.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -30,9 +30,9 @@ public class Category {
     @Column(name = "category_domain", length = 256)
     private String domain;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category")
     @JsonIgnore
-    private List<Item> items;
+    private List<Item> items = new ArrayList<>();
 
     public Long getId() {
         return id;

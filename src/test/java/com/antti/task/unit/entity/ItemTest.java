@@ -83,8 +83,8 @@ public class ItemTest {
         
         Long itemId = savedItem.getId();
         
-        item = this.entityManager.find(Item.class, itemId);
-        category = item.getCategory();
+        Item loadedItem = this.entityManager.find(Item.class, itemId);
+        category = loadedItem.getCategory();
 
         assertEquals(
             "Item category is invalid.", 

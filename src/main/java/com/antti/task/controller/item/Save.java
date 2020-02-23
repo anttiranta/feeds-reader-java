@@ -28,7 +28,7 @@ public class Save extends com.antti.task.controller.Item {
     @Autowired
     private ItemRepository itemRepository;
     
-    private final Logger logger = LogManager.getLogger("nfq.asia.task");
+    private final Logger logger = LogManager.getLogger("com.antti.task");
 
     /**
      * @param item
