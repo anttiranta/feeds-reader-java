@@ -1,15 +1,14 @@
 package com.antti.task.controller.item;
 
-import java.util.Optional;
 import javax.validation.Valid;
 import com.antti.task.core.Translator;
 import com.antti.task.core.message.ManagerInterface;
 import com.antti.task.entity.Item;
-import com.antti.task.exception.LocalizedException;
-import com.antti.task.repository.ItemRepository;
+import javax.persistence.EntityNotFoundException;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,17 +25,11 @@ public class Save extends com.antti.task.controller.Item {
     private Translator translator;
     
     @Autowired
-    private ItemRepository itemRepository;
+    @Qualifier("com.antti.task.service.item.Save")
+    private com.antti.task.service.item.Save saveService;
     
     private final Logger logger = LogManager.getLogger("com.antti.task");
 
-    /**
-     * @param item
-     * @param bindingResult
-     * @param model
-     * @return 
-     * @todo: translate strings
-     */
     @PostMapping("/save")
     public String execute(
             @Valid @ModelAttribute Item item,
@@ -48,11 +41,11 @@ public class Save extends com.antti.task.controller.Item {
 
         if (!hasErrors) {
             try {
-                Item existingItem = this.initItem(item);
-                this.copyValues(item, existingItem);
+                this.saveService.save(item);
                 
-                this.itemRepository.save(existingItem);
                 this.messageManager.addSuccess(this.translator.trans("item.save_success"));
+            } catch (EntityNotFoundException enfe) {
+                this.messageManager.addError(this.translator.trans("item.item_does_not_exist"));
             } catch (Exception e) {
                 this.messageManager.addError(this.translator.trans("item.save_exception"));
                 this.logger.error(e.getMessage());
@@ -73,40 +66,5 @@ public class Save extends com.antti.task.controller.Item {
             return "item-form";
         }
         return "redirect:/";
-    }
-    
-    private Item initItem(Item item) throws LocalizedException
-    {
-        Long id = item.getId();
-        
-        if (id != null) {
-            Optional<com.antti.task.entity.Item> value = this.itemRepository.findById(id);
-            if (!value.isPresent()) {
-                throw new LocalizedException("This item doesn't exist."); // TODO: translate
-            }
-            return value.get();
-        }
-        
-        return item;
-    }
-    
-    /**
-     * @param item
-     * @param existingItem
-     * @return
-     * @TODO: move this part of code someplace else
-     */
-    private void copyValues(Item item, Item existingItem)
-    {
-        if (item == existingItem) {
-            return;
-        }
-        
-        existingItem.setTitle(item.getTitle());
-        existingItem.setDescription(item.getDescription());
-        existingItem.setLink(item.getLink());
-        existingItem.setCategory(item.getCategory());
-        existingItem.setComments(item.getComments());
-        existingItem.setPubDate(item.getPubDate());
     }
 }
