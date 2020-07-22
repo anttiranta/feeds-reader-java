@@ -3,6 +3,7 @@ package com.antti.task.service.item;
 import javax.transaction.Transactional;
 import com.antti.task.entity.Item;
 import com.antti.task.exception.CouldNotSaveException;
+import com.antti.task.repository.CategoryRepository;
 import com.antti.task.repository.ItemRepository;
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
@@ -12,33 +13,48 @@ import org.springframework.stereotype.Service;
 @Service(value = "com.antti.task.service.item.Save")
 public class Save {
 
+    private final ItemRepository itemRepository;
+    private final CategoryRepository categoryRepository;
+    private final Copier copier;
+    
     @Autowired
-    private ItemRepository itemRepository;
+    public Save(
+        ItemRepository itemRepository,
+        CategoryRepository categoryRepository,
+        Copier copier
+    ) {
+        this.itemRepository = itemRepository;
+        this.categoryRepository = categoryRepository;
+        this.copier = copier;
+    }
 
     @Transactional
     public Item save(Item item) throws EntityNotFoundException, CouldNotSaveException {
-        Item existingItem = this.initItem(item);
-        
-        this.copyValues(item, existingItem);
+        boolean isNewItem = item.getId() == null;
+        Item existingItem = initItem(item);
 
         try {
-            this.prepareItemForSave(existingItem);
-
-            this.itemRepository.save(existingItem);
+            if (!isNewItem && existingItem.getId() != null) {
+                copier.copy(item, existingItem);
+            }
+            
+            saveCategory(existingItem);
+            
+            itemRepository.save(existingItem);
         } catch (Exception e) {
             throw new CouldNotSaveException(
-                    "Could not save item: " + e.getMessage()
+                 "Could not save item: " + e.getMessage()
             );
         }
 
-        return item;
+        return existingItem;
     }
 
     private Item initItem(Item item) throws EntityNotFoundException {
         Long id = item.getId();
-
+        
         if (id != null) {
-            Optional<com.antti.task.entity.Item> value = this.itemRepository.findById(id);
+            Optional<com.antti.task.entity.Item> value = itemRepository.findById(id);
             if (!value.isPresent()) {
                 throw new EntityNotFoundException("This item doesn't exist.");
             }
@@ -47,29 +63,14 @@ public class Save {
 
         return item;
     }
-
-    private void prepareItemForSave(Item item) {
+    
+    private void saveCategory(Item item) {
         if (item.getCategory() != null) {
-            if (item.getCategory().getItems().contains(item)) {
-                item.getCategory().getItems().set(
-                        item.getCategory().getItems().indexOf(item), item
-                );
-            } else {
-                item.getCategory().getItems().add(item);
+            boolean isNewCategory = item.getCategory().getId() == null;
+            
+            if (isNewCategory) {
+                categoryRepository.save(item.getCategory());
             }
         }
-    }
-
-    private void copyValues(Item item, Item existingItem) {
-        if (item.getId() == null && existingItem.getId() == null) {
-            return;
-        }
-        
-        existingItem.setTitle(item.getTitle());
-        existingItem.setDescription(item.getDescription());
-        existingItem.setLink(item.getLink());
-        existingItem.setComments(item.getComments());
-        existingItem.setPubDate(item.getPubDate());
-        existingItem.setCategory(item.getCategory());
     }
 }

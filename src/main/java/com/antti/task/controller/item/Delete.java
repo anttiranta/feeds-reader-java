@@ -1,43 +1,46 @@
 package com.antti.task.controller.item;
 
-import java.util.Optional;
+import com.antti.task.core.Translator;
 import javax.servlet.http.HttpServletRequest;
-import com.antti.task.core.message.ManagerInterface;
-import com.antti.task.entity.Item;
-import com.antti.task.exception.LocalizedException;
-import com.antti.task.repository.ItemRepository;
+import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import com.antti.task.core.message.Manager;
 
 @Controller
 public class Delete extends com.antti.task.controller.Item {
     
-    @Autowired
-    private ManagerInterface messageManager;
+    private final Manager messageManager;
+    private final com.antti.task.service.item.Delete deleteService;
+    private final Translator translator;
     
     @Autowired
-    private ItemRepository itemRepository;
+    public Delete(
+        Manager messageManager,
+        @Qualifier("com.antti.task.service.item.Delete") com.antti.task.service.item.Delete deleteService,
+        Translator translator
+    ) {
+        this.messageManager = messageManager;
+        this.deleteService = deleteService;
+        this.translator = translator;
+    }
 
     @GetMapping("/delete")
     public String execute(Model model, HttpServletRequest request) {
-        long itemId = this.getItemId(request);
+        long itemId = getItemId(request);
 
         if (itemId > 0) {
             try {
-                Optional<Item> value = this.itemRepository.findById(itemId);
-                if (!value.isPresent()) {
-                    throw new LocalizedException("This item doesn't exist.");
-                }
-
-                this.itemRepository.delete(value.get());
+                deleteService.deleteById(itemId);
                 
-                this.messageManager.addSuccess("Item was successfully deleted.");
-            } catch (LocalizedException le) {
-                this.messageManager.addException(le);
+                messageManager.addSuccess(translator.trans("item.delete_success"));
+            } catch (EntityNotFoundException enfe) {
+                messageManager.addException(enfe);
             } catch (Exception e) {
-                this.messageManager.addError("Something went wrong while trying to delete the item."); 
+                messageManager.addError(translator.trans("item.delete_failed")); 
             }
         }
 

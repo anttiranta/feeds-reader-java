@@ -4,25 +4,24 @@ import java.util.Iterator;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
+import com.antti.task.util.Strings;
 
 @Component
 public class UrlBuilder
 {
-    public String getUrl(HttpServletRequest request, Map<String, String[]> params)
-    {
-        String routePath = this.getActionPath(request);
+    public String getUrl(HttpServletRequest request, Map<String, String[]> params) {
+        String routePath = getActionPath(request);
         
         if(!params.isEmpty()) {
             Iterator<Map.Entry<String, String[]>> itr = params.entrySet().iterator(); 
             boolean first = true;
             
-            while(itr.hasNext()) 
-            {
+            while(itr.hasNext()) {
                 Map.Entry<String, String[]> entry = itr.next();
                 
                 String[] values = entry.getValue();
                 for (String value : values) {
-                    if (value == null || value.equals("")) {
+                    if (Strings.isNullOrEmpty(value)) {
                         continue;
                     }
                     routePath += (first ? "?" : "&");
@@ -37,12 +36,10 @@ public class UrlBuilder
         return routePath;
     }
     
-    protected String getActionPath(HttpServletRequest request)
-    {
+    protected String getActionPath(HttpServletRequest request) {
         StringBuffer url = request.getRequestURL();
 
-        String originalPath = url.toString();
-		
+        String originalPath = url.toString();	
         int startPos = originalPath.lastIndexOf("/") + 1;
         
         return originalPath.substring(0, startPos);

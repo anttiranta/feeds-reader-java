@@ -5,84 +5,62 @@
         <title>Pagination</title>
     </head>
     <body>
-        <div class="row" th:fragment="pager" style="float: left;">
+        <div th:fragment="pager">
             <script type="text/javascript" th:inline="javascript">
                 /*<![CDATA[*/
                 function reloadPage() {
-                    window.location = document.getElementById("limiter").value;
+                window.location = document.getElementById("limiter").value;
                 }
                 /*]]>*/
             </script>
-            
-            <th:block th:if="${pager.getPage().getContent().isEmpty() == false}">
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
-                    <p class="toolbar-amount">
-                        <span class="toolbar-number">
-                            <p th:if="${pager.getLastPageNum()>1}" th:text="'Items ' + ${pager.getFirstNum()} + ' to ' + ${pager.getLastNum()} + ' of ' + ${pager.getPage().getTotalElements() + ' total'}"></p>
-                            <p th:if="${pager.getTotalNum() == 1 || pager.getLastPageNum()<=1}" th:text="'Item(s) ' + ${pager.getPage().getTotalElements()}"></p>
-                        </span>
-                    </p>
 
-                    <th:block th:if="${pager.getLastPageNum()>1}">
-                        <div class="pages">
-                            <strong class="label pages-label" id="paging-label">Page</strong>
-                            <ul class="items pages-items" aria-labelledby="paging-label">
-                                <li th:if="${pager.isFirstPage() == false}" class="item pages-item-previous">
-                                    <a th:href="${pager.getPreviousPageUrl()}">
-                                        <span>Previous Page</span>
-                                    </a>
-                                </li>
+            <th:block th:if="${pager != null && pager.canRender() == true}">
+                <div class="btn-toolbar" style="float: right">
+                    <div class="btn-group">
+                        <a class="btn" style="border: 1px solid" th:href="${pager.getFirstPageUrl()}">&laquo;</a>
 
-                                <li class="item">
-                                    <a class="page first" th:href="${pager.getFirstPageUrl()}">
-                                        <span>Page 1</span>
-                                    </a>
-                                </li>
+                        <th:block th:if="${pager.canRenderPreviousPageUrl() == true}">
+                            <a class="btn" style="border: 1px solid" th:href="${pager.getPreviousPageUrl()}">&lsaquo;</a>
+                        </th:block>
+                        
+                        <th:block th:if="${pager.canRenderLeftEllipsisPageUrl() == true}">
+                            <a class="btn" style="border: 1px solid" th:href="${pager.getFirstPageUrl()}" th:text="${pager.getPaginationCounter().getFirstPageNum()}"></a>
+                            <a class="btn" style="border: 1px solid" th:href="${pager.getLeftEllipsisPageUrl()}">...</a>
+                        </th:block>
 
-                                <nav aria-label="Pagination">
-                                    <ul class="pagination justify-content-center">
-                                        <li class="page-item" th:each="page : ${pager.getPages()}" >
-                                            <div th:if="${pager.isPageCurrent(page) == true}" class="item current">
-                                                <strong class="page">
-                                                    <span th:text="'You\'re currently reading page ' + ${page}"></span>
-                                                </strong>
-                                            </div>
-                                            <div th:unless="${pager.isPageCurrent(page) == true}" class="item">
-                                                <a th:href="${pager.getPageUrl(page)}" class="page">
-                                                    <span th:text="'Page ' + ${page}"></span>
-                                                </a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </nav>
-
-                                <li class="item">
-                                    <a class="page last" th:href="${pager.getLastPageUrl()}">
-                                        <span th:text="'Page ' + ${pager.getLastPageNum()}"></span>
-                                    </a>
-                                </li>
-
-                                <li th:if="${pager.isLastPage() == false}" class="item pages-item-next">
-                                    <a th:href="${pager.getNextPageUrl()}">
-                                        <span>Next Page</span>
-                                    </a>
-                                </li>
-                        </div>
-                    </th:block>
-
-                    <div class="limiter">
-                        <strong class="limiter-label">Show</strong>
-                        <select id="limiter" onchange="reloadPage();">
-                            <th:block th:each="limit : ${pager.getAvailableLimit().entrySet()}">
-                                <option th:value="${pager.getLimitUrl(limit.getKey())}" th:text="${limit.getValue()}" th:selected="${pager.isLimitCurrent(limit.getKey())}"></option>
-                                </option>
+                        <th:block th:each="page : ${pager.getPaginationCounter().getPages()}">
+                            <th:block th:if="${pager.getPaginationCounter().isPageCurrent(page) == true}">
+                                <a class="btn btn-primary" th:href="${pager.getPageUrl(page)}">
+                                    <span th:text="${page}"></span>
+                                </a>
                             </th:block>
-                        </select>
-                        <span class="limiter-text">per page</span>
+                            <th:block th:if="${pager.getPaginationCounter().isPageCurrent(page) == false}">
+                                <a class="btn" style="border: 1px solid" th:href="${pager.getPageUrl(page)}">
+                                    <span th:text="${page}"></span>
+                                </a>
+                            </th:block>
+                        </th:block>
+                        
+                        <th:block th:if="${pager.canRenderRightEllipsisPageUrl() == true}">
+                            <a class="btn" style="border: 1px solid" th:href="${pager.getRightEllipsisPageUrl()}">...</a>
+                            <a class="btn" style="border: 1px solid" th:href="${pager.getLastPageUrl()}" th:text="${pager.getPaginationCounter().getLastPageNum()}"></a>
+                        </th:block>
+
+                        <th:block th:if="${pager.canRenderNextPageUrl() == true}">
+                            <a class="btn" style="border: 1px solid" th:href="${pager.getNextPageUrl()}">&rsaquo;</a>
+                        </th:block>
+                        <a class="btn" style="border: 1px solid" th:href="${pager.getLastPageUrl()}">&raquo;</a>
                     </div>
-                </div>
-                <div class="col-md-2"></div>
+                </div>               
+            </th:block>
+
+            <div class="limiter" style="float: left">
+                <select id="limiter" onchange="reloadPage();">
+                    <th:block th:each="limit : ${pager.getPaginationCounter().getAvailableLimit(true).entrySet()}">
+                        <option th:value="${pager.getLimitUrl(limit.getKey())}" th:text="${limit.getValue()}" th:selected="${pager.getPaginationCounter().isLimitCurrent(limit.getKey())}"></option>
+                    </th:block>
+                </select>
+            </div>
             </th:block>
         </div>
     </body>

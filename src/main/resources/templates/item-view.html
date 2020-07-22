@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${title}"></title>
+        <th:block th:include="layout/header :: header-meta(title=${title})"></th:block>
+    </head>
+    <body>
+        <th:block th:include="layout/navbar :: navbar(current='items')"></th:block>
+        
+        <div th:replace="layout/messages :: messages(messages=${messages})"></div>
+        
+        <div style="margin: 15px">
+            <h1 style="font-size:25px" th:text="${title}"></h1>
+
+            <div th:replace="item/view :: item(item=${item})"></div>
+        </div>
+    </body>
+</html>

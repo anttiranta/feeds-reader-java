@@ -2,7 +2,7 @@ package com.antti.task.core.message;
 
 import java.util.List;
 
-public abstract class AbstractMessage implements MessageInterface {
+public abstract class AbstractMessage implements Message {
 
     protected String text;
  
@@ -24,34 +24,34 @@ public abstract class AbstractMessage implements MessageInterface {
 
     @Override
     public String getText() {
-        return this.text;
+        return text;
     }
 
     @Override
-    public MessageInterface setText(String text) {
+    public Message setText(String text) {
         this.text = text;
         return this;
     }
 
     @Override
-    public MessageInterface setIdentifier(String identifier) {
+    public Message setIdentifier(String identifier) {
         this.identifier = identifier;
         return this;
     }
 
     @Override
     public String getIdentifier() {
-        return this.identifier;
+        return identifier;
     }
 
     @Override
-    public MessageInterface setIsSticky(boolean isSticky) {
+    public Message setIsSticky(boolean isSticky) {
         this.isSticky = isSticky;
         return this;
     }
 
     @Override
     public boolean getIsSticky() {
-        return this.isSticky;
+        return isSticky;
     }
 }

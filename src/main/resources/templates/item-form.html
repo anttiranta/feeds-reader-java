@@ -9,67 +9,54 @@
 
         <div th:replace="layout/messages :: messages(messages=${messages})"></div>
 
-        <h1 style="font-size:25px" th:text="${title}"></h1>
-        <br />
+        <div style="margin: 15px;">
+            <h1 th:text="${title}"></h1>
 
-        <div class="container">
-            <form th:action="@{/save}" method="post" th:object="${item}" class="form-horizontal blogForm">
-                <div class="form-group">
-                    <input type="hidden" th:field="*{id}" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <input type="hidden" id="current_category_id" th:value="${item.category !=null}? ${item.category.id} : '0'" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="title" class="col-sm-2 control-label">Title:</label>
-                    <div class="col-sm-10">
-                        <input type="text" th:field="*{title}" class="form-control" />
-                        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">error</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="description" class="col-sm-2 control-label">Description:</label>
-                    <div class="col-sm-10">
-                        <textarea rows="10" cols="40" th:field="*{description}" class="form-control" />
-                        <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">error</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="pubDate" class="col-sm-2 control-label">Published date:</label>
-                    <div class="col-sm-10">
-                        <input type="text" th:field="*{pubDate}" class="form-control" id="pubDate" placeholder="Format: 2001-07-04T12:08:56.235-0700" />
-                        <span th:if="${#fields.hasErrors('pubDate')}" th:errors="*{pubDate}">error</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="link" class="col-sm-2 control-label">Link:</label>
-                    <div class="col-sm-10">
-                        <input type="text" th:field="*{link}" class="form-control" />
-                        <span th:if="${#fields.hasErrors('link')}" th:errors="*{link}">error</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="link" class="col-sm-2 control-label">Comments:</label>
-                    <div class="col-sm-10">
-                        <input type="text" th:field="*{comments}" class="form-control" />
-                        <span th:if="${#fields.hasErrors('comments')}" th:errors="*{comments}">error</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="link" class="col-sm-2 control-label">Category:</label>
-                    <div class="col-sm-10">
-                        <select th:field="*{category}" id="category_select">
-                        </select>
-                        <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}">error</span>
-                    </div>
-                </div>
+            <form th:action="@{/save}" method="post" th:object="${item}">
+                <fieldset>
+                    <!-- Hidden fields -->
+                    <input type="hidden" th:field="*{id}" />
+                    <input type="hidden" id="current_category_id" th:value="${item.category !=null}? ${item.category.id} : '0'" />
 
-                <input type="submit" class="btn btn-primary" value="Save" />
-                <a th:href="@{/}">Cancel</a>
+                    <!-- Title -->
+                    <label th:text="#{item.title}">Title:</label>
+                    <input type="text" th:field="*{title}" class="form-control" />
+                    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="display: block; color: red;">error</span>
+
+                    <!-- Description -->
+                    <label th:text="#{item.description}">Description:</label>
+                    <textarea rows="10" cols="40" th:field="*{description}" class="form-control" />
+                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="display: block; color: red;">error</span>
+
+                    <!-- Published date -->
+                    <label th:text="#{item.published_at}">Published at</label>
+                    <input type="text" th:field="*{pubDate}" class="form-control" id="pubDate" placeholder="Format: 2001-07-04T12:08:56.235-0700" />
+                    <span th:if="${#fields.hasErrors('pubDate')}" th:errors="*{pubDate}" style="display: block; color: red;">error</span>
+
+                    <!-- Link -->
+                    <label th:text="#{item.link}">Link:</label>
+                    <input type="text" th:field="*{link}" class="form-control" />
+                    <span th:if="${#fields.hasErrors('link')}" th:errors="*{link}" style="display: block; color: red;">error</span>
+
+                    <!-- Comments -->
+                    <label th:text="#{item.comments}">Comments:</label>
+                    <input type="text" th:field="*{comments}" class="form-control" />
+                    <span th:if="${#fields.hasErrors('comments')}" th:errors="*{comments}" style="display: block; color: red;">error</span>
+
+                    <!-- Category -->
+                    <label th:text="#{item.category}">Category:</label>
+                    <select th:field="*{category}" id="category_select" class="form-control"></select>
+                    <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}" style="display: block; color: red;">error</span>
+
+                    <br />
+                    
+                    <!-- Buttons/links -->
+                    <input type="submit" class="btn btn-primary" value="Save" th:value="#{general.action_save}" />
+                    <a class="btn" th:href="@{/}" th:text="#{general.action_cancel}">Cancel</a>
+                </fieldset>
             </form>
         </div>
 
-        
         <script type="text/javascript" th:inline="javascript">
             var ajax = false;
 

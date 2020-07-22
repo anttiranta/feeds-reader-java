@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
-        <div th:fragment="messages" class="messages">
+        <div th:fragment="messages" class="messages" id="messages-container">
             <th:block th:if="${messages.isEmpty() == false}" >
                 <th:block th:each="message : ${messages}">
-                    <div class="alert" th:classappend="'alert-' + ${message.getType()}" th:text="${message.getText()}"></div>
+                    <div class="alert" th:classappend="'alert-' + ${message.getType()}" th:text="${message.getText()}" style="margin: 10px;"></div>
                 </th:block>
             </th:block>
         </div>

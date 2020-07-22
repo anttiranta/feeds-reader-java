@@ -20,7 +20,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // TODO: only for testing!
+        // Only for testing.
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
         

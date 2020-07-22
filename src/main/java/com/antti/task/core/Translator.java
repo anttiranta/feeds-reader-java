@@ -19,10 +19,10 @@ public class Translator {
     public String trans(String str, Object... args) 
     {
         Locale locale = null;
-        if(this.request != null && this.localeResolver != null) {
-            locale = this.localeResolver.resolveLocale(this.request);
+        if(request != null && localeResolver != null) {
+            locale = localeResolver.resolveLocale(request);
         } else {
-            locale = this.getDefaultLocale();
+            locale = getDefaultLocale();
         }
 
         ResourceBundle messages = ResourceBundle.getBundle("messages", locale);

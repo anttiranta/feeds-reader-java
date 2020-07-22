@@ -1,28 +1,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" 
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
-	lang="en">
-<head>
-	<style>
-	.image-blurred-edge {
-	    background-image: url('/resources/img/404.jpg');
-	    width: 359px;
-	    height: 299px;
-	    box-shadow: 0 0 8px 8px white inset;
-	    margin-left: auto;
-	    margin-right: auto;
-	}
-	</style>
-        <title>404</title>
-</head>
-<body> 
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="en">
+    <head>
+        <title>Page not found</title>
+    </head>
     
-<div class="container">
-    <h1 style="text-align: center;">404 (NOT FOUND)</h1>
-
-    <br /><br />
-    <div class="image-blurred-edge"></div>
-    <br /><br />
-</div>
-</body>
+    <body> 
+        <div style="background-color: lightgray; padding: 20px;">
+            <h2>Page not found</h2>
+            
+            <p style="margin-top: 2em;">Looks like you've followed a broken link or entered a URL that doesn't exist on this site.</p>
+            <p style="margin-top: 0.5em;"><a href="/">&larr; Back to our site</a></p>
+        </div>
+    </body>
 </html>

@@ -1,11 +1,7 @@
 package com.antti.task.repository;
 
-import java.util.List;
 import com.antti.task.entity.User;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
@@ -24,5 +20,4 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("select distinct u from User u left join fetch u.roles")
     List<User> findAllFetchRoles();*/
-
 }

@@ -5,23 +5,11 @@
     </head>
     <body>
         <th:block th:fragment="navbar">
-            <div class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0px;">
                 <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a href="/">
-                            <img src="/spring/icon" alt="logo" class="pull-left" style="padding-left:10px;padding-right:10px;padding-top:10px;" />
-                        </a>
-                    </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li th:class="${current == 'items' ? 'active' : ''}"><a href="/" th:text="#{navbar.items}"></a></li>
-                            <!--<li th:class="${current == 'categories' ? 'active' : ''}"><a href="/category/index">Categories</a></li>-->
                         </ul>
                         <th:block th:include="layout/language_switcher :: language-switcher"></th:block>
                     </div>

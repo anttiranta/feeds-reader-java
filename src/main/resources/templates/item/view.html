@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <title>Item</title>
+    </head>
+    <body>
+        <th:block th:fragment="item">
+            <table style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th th:text="#{item.info} + ':'">Item Info:</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="15%" th:text="#{item.title}">Title:</td>
+                        <td th:text="${item.title}" style="padding-top: 5px;"></td>
+                    </tr>
+                    <tr>
+                        <td width="15%" th:text="#{item.description}">Description:</td>
+                        <td th:text="${item.description}" style="padding-top: 5px;"></td>
+                    </tr>
+                    <tr>
+                        <td width="15%" th:text="#{item.link}">Link:</td>
+                        <td th:text="${item.link}" style="padding-top: 5px;"></td>
+                    </tr>
+                    <tr>
+                        <td width="15%" th:text="#{item.published_at}">Published At:</td>
+                        <td th:text="${item.pubDate}" style="padding-top: 5px;"></td>
+                    </tr>
+                    <tr>
+                        <td width="15%" th:text="#{item.comments}">Comments:</td>
+                        <td th:text="${item.comments}" style="padding-top: 5px;"></td>
+                    </tr>
+                    <tr>
+                        <td width="15%" th:text="#{item.category}">Category:</td>
+                        <th:block th:if="${item.category} != null">
+                            <td th:text="${item.category.name}" style="padding-top: 5px;"></td>
+                        </th:block>
+                        <th:block th:if="${item.category} == null">
+                            <td style="padding-top: 5px;">&nbsp;</td>
+                        </th:block>
+                        
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+
+            <!-- Buttons/links -->
+            <a class="btn btn-primary" th:href="${'/edit/?id=' + item.id}" th:text="#{item.edit_item}">Edit Item</a>
+            <a class="btn" th:href="@{/}" th:text="#{general.action_back_to_list}">Back to list</a>
+        </th:block>
+    </body>
+</html>
+
+

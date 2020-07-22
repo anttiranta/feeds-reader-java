@@ -12,30 +12,31 @@ import org.springframework.stereotype.Component;
 @Component
 public class Builder {
 
-    @Autowired
     private ItemRepository itemRepository;
-
-    private final Logger logger
-            = LogManager.getLogger("com.antti.task");
-
-    /**
-     * Default constructor
-     */
-    public Builder() {}
-
+    private Logger logger;
+    
+    @Autowired
     public Builder(ItemRepository itemRepository) {
+        this(itemRepository, LogManager.getLogger("com.antti.task"));
+    }
+    
+    public Builder(
+        ItemRepository itemRepository,
+        Logger logger
+    ) {
         this.itemRepository = itemRepository;
+        this.logger = logger;
     }
 
     public Item build(HttpServletRequest request) {
-        Long itemId = this.getItemId(request);
+        Long itemId = getItemId(request);
 
         if (itemId != null) {
-            Optional<Item> value = this.itemRepository.findById(itemId);
+            Optional<Item> value = itemRepository.findById(itemId);
             if (value.isPresent()) {
                 return value.get();
             } else {
-                this.logger.error("This item doesn't exist.");
+                logger.error("This item doesn't exist.");
                 return new Item();
             }
         }

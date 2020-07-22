@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <title>Item list</title>
+    </head>
+    <body>
+        <th:block th:fragment="items">
+            <table class="table table-bordered table-hover table-striped display" id="dataTable">
+                <thead>
+                    <tr>
+                        <th style="vertical-align: middle">ID</th>
+                        <th style="vertical-align: middle" th:text="#{item.title}">Title</th>
+                        <th style="vertical-align: middle" th:text="#{item.link}">Link</th>
+                        <th style="vertical-align: middle" th:text="#{item.published_at}">Published at</th>
+                        <th style="vertical-align: middle" th:text="#{item.category}">Category</th>
+                        <th style="width:20%; vertical-align: middle" th:text="#{general.actions}">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item : ${items}">
+                        <td>
+                            <th:block th:text="${item.id}"></th:block>      
+                        </td>
+                        <td>
+                            <th:block th:text="${item.title}"></th:block>
+                        </td>
+                        <td>
+                            <a th:id="${item.id}" th:href="${item.link}" class="itemLink" target="_blank">
+                                <strong th:id="${item.id}" class="itemTitle">
+                                    <th:block th:text="${item.link}"></th:block>
+                                </strong>
+                            </a>   
+                        </td>
+                        <td>
+                            <th:block th:text="${#dates.format(item.pubDate, 'dd-MM-yyyy HH:mm')}"></th:block>
+                        </td>
+                        <td>
+                            <th:block th:if="${item.category != null}" th:text="${item.category.name}"></th:block>
+                        </td>
+                        <td>
+                            <span style="display: inline-block;">
+                                <a class="btn btn-success" th:href="${'/view/?id=' + item.id}" th:text="#{general.action_show}">Show</a>
+                                <a class="btn btn-warning" th:href="${'/edit/?id=' + item.id}" th:text="#{general.action_edit}">Edit</a>
+                                <a class="btn btn-danger" th:href="${'/delete/?id=' + item.id}" th:text="#{general.action_delete}">Delete</a>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </th:block>
+    </body>
+</html>
+

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <title>Toolbar</title>
+    </head>
+    <body>
+        <th:block th:fragment="toolbar">
+            <a th:href="@{/new}" class="btn btn-success" style="margin-right:5px;" th:text="#{item.add_item}"></a> 
+            
+            <div style="margin-bottom: 8px; float: right;">
+                <form th:action="@{/}" method="post" style="display: inline-block; margin-right: 5px;">
+                    <div class="form-inline">
+                        <select id="search_subject" name="search_subject">
+                            <option value="title" th:text="#{item.title}">Title</option>
+                            <option value="category_name" th:text="#{item.category}">Category</option>
+                        </select>
+                        <input type="text" class="input-medium search-query" name="search_word" id="search_word" />
+                        <input type="submit" class="btn" th:value="#{item.search}" />
+                    </div>
+                </form>
+                <a th:href="@{/}" th:text="#{item.clear_filters}"></a>
+            </div>
+        </th:block>
+    </body>
+</html>
+
