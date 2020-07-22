@@ -17,14 +17,14 @@ Task is to create a Java application that is a feeds reader. The app can read fe
 
 ## Running the project
 
-- In Netbeans (or other IDE) simply click "Run project". Now the website should be visible in the browser at http://http://127.0.0.1:8080/
+In Netbeans (or other IDE) simply click "Run project". Now the website should be visible in the browser at http://http://127.0.0.1:8080/
 
 ## Using the console command
 
-- To import two sample feeds, simply run: shell:>import-item https://www.feedforall.com/sample.xml,https://www.feedforall.com/sample-feed.xml
+To import two sample feeds, simply run: shell:>import-item https://www.feedforall.com/sample.xml,https://www.feedforall.com/sample-feed.xml
 
 ## To note
 
-- UI (especially edit form) is not the greatest, but since this project's point is to demonstrate my ability to build Java Spring applications, I'm not going to put any extra effort on fine tuning the UI. 
+UI (especially edit form) is not the greatest, but since this project's point is to demonstrate my ability to build Java Spring applications, I'm not going to put any extra effort on fine tuning the UI. 
 
 ![Screenshot](https://raw.githubusercontent.com/anttiranta/anttiranta.github.io/master/images/feeds-reader-java/java-feeds-reader.jpg)
