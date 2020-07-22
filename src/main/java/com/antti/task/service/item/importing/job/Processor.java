@@ -9,7 +9,7 @@ import com.antti.task.exception.CouldNotSaveException;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import com.antti.task.service.item.importing.job.processor.mapper.CategoryMapper;
+import com.antti.task.item.importing.processor.mapper.CategoryMapper;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 

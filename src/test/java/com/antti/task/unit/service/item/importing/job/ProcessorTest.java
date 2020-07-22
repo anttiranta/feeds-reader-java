@@ -10,7 +10,7 @@ import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 import com.antti.task.service.item.importing.job.Processor;
-import com.antti.task.service.item.importing.job.processor.mapper.CategoryMapper;
+import com.antti.task.item.importing.processor.mapper.CategoryMapper;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

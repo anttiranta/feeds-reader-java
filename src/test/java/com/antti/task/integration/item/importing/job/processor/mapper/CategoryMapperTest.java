@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.mockito.Mockito.*;
 import com.antti.task.item.importing.Helper;
 import com.antti.task.repository.CategoryRepository;
-import com.antti.task.service.item.importing.job.processor.mapper.CategoryMapper;
+import com.antti.task.item.importing.processor.mapper.CategoryMapper;
 import com.antti.task.dto.CategoryDto;
 import com.antti.task.dto.ItemDto;
 import com.antti.task.entity.Category;

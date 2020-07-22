@@ -1,4 +1,4 @@
-package com.antti.task.service.item.importing.job.processor.mapper;
+package com.antti.task.item.importing.processor.mapper;
 
 import com.antti.task.dto.CategoryDto;
 import com.antti.task.dto.ItemDto;

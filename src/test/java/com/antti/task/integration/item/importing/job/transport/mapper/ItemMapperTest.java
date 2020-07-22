@@ -1,7 +1,7 @@
 package com.antti.task.integration.item.importing.job.transport.mapper;
 
 import com.antti.task.dto.ItemDto;
-import com.antti.task.service.item.importing.job.transport.mapper.ItemMapper;
+import com.antti.task.item.importing.transport.mapper.ItemMapper;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;

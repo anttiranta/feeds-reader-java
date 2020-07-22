@@ -3,7 +3,7 @@ package com.antti.task.unit.service.item.importing.job;
 import com.antti.task.dto.ItemDto;
 import com.antti.task.item.importing.Transporter;
 import com.antti.task.service.item.importing.job.Transport;
-import com.antti.task.service.item.importing.job.transport.mapper.ItemMapper;
+import com.antti.task.item.importing.transport.mapper.ItemMapper;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilderFactory;
 import static org.junit.Assert.assertTrue;

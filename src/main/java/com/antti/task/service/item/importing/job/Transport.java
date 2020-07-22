@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.w3c.dom.Document;
 import com.antti.task.item.importing.Transporter;
-import com.antti.task.service.item.importing.job.transport.mapper.ItemMapper;
+import com.antti.task.item.importing.transport.mapper.ItemMapper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.antti.task.service.item.importing.job.transport.mapper;
+package com.antti.task.item.importing.transport.mapper;
 
 import com.antti.task.dto.CategoryDto;
 import java.util.Date;
