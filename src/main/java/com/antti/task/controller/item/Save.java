@@ -77,9 +77,9 @@ public class Save extends com.antti.task.controller.Item {
         
         if (hasErrors){
             if (isItemNew) {
-                model.addAttribute("title", "New Item");
+                model.addAttribute("title", translator.trans("item.new_item"));
             } else {
-                String resultPageTitle = item.getId() != null ? item.getTitle() + " (ID: " + item.getId() + ")" : "Items"; 
+                String resultPageTitle = item.getTitle() + " (ID: " + item.getId() + ")";
                 model.addAttribute("title", resultPageTitle);
             }
             model.addAttribute("messages", MessageListMapper.map(messageManager.getMessages(true)));
